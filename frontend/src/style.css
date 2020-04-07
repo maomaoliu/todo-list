@@ -1,0 +1,29 @@
+.text-button {
+  border: none;
+  background-color: inherit;
+  padding: 14px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+  color: dodgerblue;
+}
+
+/* On mouse-over */
+.text-button:hover {color: #3465a5;}
+
+.submit-button {
+  background-color: #555555;
+  color: white;
+  height: 36px;
+  width: 80px;
+} 
+
+.task-input {
+  margin: 0 20px;
+  height: 30px;
+  width: 200px;
+}
+
+h1 {
+  margin: 20px;
+}
