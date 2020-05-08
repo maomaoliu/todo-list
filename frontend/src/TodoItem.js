@@ -1,17 +1,22 @@
-import React, { useState } from "react";
-import TextField from "@material-ui/core/TextField";
+import React, { useState } from 'react';
+import TextField from '@material-ui/core/TextField';
 
 const TodoItem = ({ item, onItemUpdate, onItemDelete }) => {
   const [isEditable, setIsEditable] = useState(false);
   const [todoItem, setTodoItem] = useState(item);
 
   return (
-    <li className="task-item" id={"task-item-" + todoItem.id} data-testid="task-item">
+    <li
+      className="task-item"
+      id={'task-item-' + todoItem.id}
+      data-testid="task-item"
+    >
+      <input aria-label="isComplete" type="checkbox" />
       <TextField
         value={todoItem.content}
         disabled={!isEditable}
         multiline
-        onChange={(e) => setTodoItem({ ...item, content: e.target.value })}
+        onChange={e => setTodoItem({ ...item, content: e.target.value })}
         onBlur={() => {
           onItemUpdate(todoItem);
           setIsEditable(false);
