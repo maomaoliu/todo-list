@@ -1,26 +1,26 @@
-import React, { useState, Fragment, useEffect } from "react";
-import TodoItem from "./TodoItem";
-import { getTodos, addTodo, deleteTodo, updateTodo } from "./api/TodoApi";
-import "./style.css";
-import _ from "lodash";
+import React, { useState, Fragment, useEffect } from 'react';
+import TodoItem from './TodoItem';
+import { getTodos, addTodo, deleteTodo, updateTodo } from './api/TodoApi';
+import './style.css';
+import _ from 'lodash';
 
 const TodoList = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [list, setList] = useState(null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const handleLoadTasks = () => {
     getTodos()
-      .then((response) => {
+      .then(response => {
         setList(response);
       })
-      .catch((error) => {
+      .catch(error => {
         setError("Unable to retrieve todo's");
       });
   };
 
   const handleAddTask = () => {
-    if (inputValue === "") return;
+    if (inputValue === '') return;
 
     const newTask = {
       id: _.parseInt(list.length ? list[list.length - 1].id : 0) + 1,
@@ -29,21 +29,21 @@ const TodoList = () => {
 
     addTodo(newTask).then(() => {
       setList([...list, newTask]);
-      setInputValue("");
+      setInputValue('');
     });
   };
 
-  const handleDeleteTask = (id) =>
+  const handleDeleteTask = id =>
     deleteTodo(id).then(() => {
-      setList(list.filter((item) => item.id !== id));
+      setList(list.filter(item => item.id !== id));
     });
 
-  const handleUpdateTask = (task) => {
-    if (task.content === "") return;
+  const handleUpdateTask = task => {
+    if (task.content === '') return;
 
-    updateTodo(task).then((response) => {
+    updateTodo(task).then(response => {
       setList(
-        list.map((x) => (x.id === response.id ? { ...x, ...response } : x))
+        list.map(x => (x.id === response.id ? { ...x, ...response } : x)),
       );
     });
   };
@@ -67,15 +67,19 @@ const TodoList = () => {
           className="task-input"
           type="text"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={e => setInputValue(e.target.value)}
           data-testid="task-input"
         />
-        <button className="submit-button" onClick={handleAddTask} data-testid="add-button" >
+        <button
+          className="submit-button"
+          onClick={handleAddTask}
+          data-testid="add-button"
+        >
           提交
         </button>
       </div>
       <ul data-testid="task-items" className="task-items">
-        {list.map((item) => (
+        {list.map(item => (
           <TodoItem
             key={item.id}
             item={item}
