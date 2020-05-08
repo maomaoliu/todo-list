@@ -2,3 +2,6 @@ Data/
 .idea/
 backend/.gradle/
 frontend/.idea/
+backend/build
+backend/src/main/resources/application.properties
+frontend/yarn.lock
