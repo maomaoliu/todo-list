@@ -1,6 +1,7 @@
 package com.thoughtworks.campus.store;
 
 import com.thoughtworks.campus.model.Task;
+import com.thoughtworks.campus.model.TaskStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class TaskStoreTest {
     }
 
     private Task createTask(long l, String test) {
-        Task task = new Task(l, test);
+        Task task = new Task(l, test, TaskStatus.Created);
         task.setUpdatedAt();
         return task;
     }

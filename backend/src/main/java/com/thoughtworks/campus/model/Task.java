@@ -8,14 +8,18 @@ import java.time.LocalDateTime;
 public class Task {
     private long id;
     private String content;
+    private TaskStatus status;
     private LocalDateTime updatedAt;
 
     public Task() {
     }
 
-    public Task(Long id, String content) {
+    public Task(Long id,
+                String content,
+                TaskStatus status) {
         this.id = id;
         this.content = content;
+        this.status = status;
     }
 
     public long getId() {
@@ -24,6 +28,14 @@ public class Task {
 
     public String getContent() {
         return content;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 
     public LocalDateTime getUpdatedAt() {

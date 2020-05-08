@@ -2,6 +2,7 @@ package com.thoughtworks.campus.controller;
 
 import com.google.gson.Gson;
 import com.thoughtworks.campus.model.Task;
+import com.thoughtworks.campus.model.TaskStatus;
 import com.thoughtworks.campus.service.TaskService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ public class TaskControllerTest {
 
     @BeforeEach
     void setUp() {
-        tasks.add(new Task(1L, "a"));
+        tasks.add(new Task(1L, "a", TaskStatus.Created));
     }
 
     @Test
@@ -46,7 +47,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldFindTaskByIdIfPresent() throws Exception {
-        when(service.find(3L)).thenReturn(Optional.of(new Task(3L, "X")));
+        when(service.find(3L)).thenReturn(Optional.of(new Task(3L, "X", TaskStatus.Created)));
         this.mockMvc.perform(get("/api/tasks/3")).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").value("X"));
     }
@@ -59,7 +60,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldDeleteWhenExist() throws Exception {
-        when(service.delete(2L)).thenReturn(Optional.of(new Task(2L, "B")));
+        when(service.delete(2L)).thenReturn(Optional.of(new Task(2L, "B", TaskStatus.Created)));
         this.mockMvc.perform(delete("/api/tasks/2")).andDo(print()).andExpect(status().isNoContent());
     }
 
@@ -71,8 +72,8 @@ public class TaskControllerTest {
 
     @Test
     public void shouldCreateTask() throws Exception {
-        Task task = new Task(1L, "new");
-        Task savedTask = new Task(1L, "new");
+        Task task = new Task(1L, "new", TaskStatus.Created);
+        Task savedTask = new Task(1L, "new", TaskStatus.Created);
         when(service.saveTask(task)).thenReturn(savedTask);
         this.mockMvc.perform(post("/api/tasks")
                 .contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(task)))
@@ -81,8 +82,8 @@ public class TaskControllerTest {
 
     @Test
     public void shouldChangeTaskById() throws Exception {
-        Task task = new Task(2L, "updated");
-        Task updated = new Task(1L, "updated");
+        Task task = new Task(2L, "updated", TaskStatus.Created);
+        Task updated = new Task(1L, "updated", TaskStatus.Created);
         when(service.update(any())).thenReturn(Optional.of(updated));
         this.mockMvc.perform(put("/api/tasks/1")
                 .contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(task)))
@@ -91,8 +92,19 @@ public class TaskControllerTest {
     }
 
     @Test
+    public void shouldCompleteTaskById() throws Exception {
+        Task task = new Task(1L, "finish ppt", TaskStatus.Created);
+        Task updated = new Task(1L, "finish ppt", TaskStatus.Complete);
+        when(service.update(any())).thenReturn(Optional.of(updated));
+        this.mockMvc.perform(put("/api/tasks/1")
+                .contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(task)))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(TaskStatus.Complete.toString()));
+    }
+
+    @Test
     public void shouldReturnNotFoundWhenChangeTaskButDoesNotExit() throws Exception {
-        Task task = new Task(2L, "updated");
+        Task task = new Task(2L, "updated", TaskStatus.Created);
         when(service.update(any())).thenReturn(Optional.empty());
         this.mockMvc.perform(put("/api/tasks/1")
                 .contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(task)))

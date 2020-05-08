@@ -2,6 +2,7 @@
   {
     "id": 1,
     "content": "test",
+    "status": "created",
     "updatedAt": "2020-04-05 00:00:00"
   }
 ]
