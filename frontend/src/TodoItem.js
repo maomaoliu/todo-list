@@ -11,7 +11,14 @@ const TodoItem = ({ item, onItemUpdate, onItemDelete }) => {
       id={'task-item-' + todoItem.id}
       data-testid="task-item"
     >
-      <input aria-label="isComplete" type="checkbox" />
+      <input
+        aria-label="isComplete"
+        checked={item.isComplete}
+        type="checkbox"
+        onChange={e => {
+          onItemUpdate({ ...todoItem, isComplete: e.target.checked });
+        }}
+      />
       <TextField
         value={todoItem.content}
         disabled={!isEditable}

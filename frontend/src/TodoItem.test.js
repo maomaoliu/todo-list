@@ -7,11 +7,16 @@ describe('<TodoItem>', () => {
     id: 1,
     content: 'First Item',
     createAt: '2020/02/02',
+    isComplete: false,
   };
 
   const onItemUpdate = () => {};
   const onItemDelete = () => {};
   const labelText = 'isComplete';
+
+  beforeEach(() => {
+    item.isComplete = false;
+  });
 
   test('should render the checkbox currectly', async () => {
     render(
@@ -22,5 +27,17 @@ describe('<TodoItem>', () => {
       />,
     );
     expect(screen.queryByLabelText(labelText)).toBeInTheDocument();
+  });
+
+  test('should display item complete status currectlly', async () => {
+    render(
+      <TodoItem
+        item={item}
+        onItemUpdate={onItemUpdate}
+        onItemDelete={onItemDelete}
+      />,
+    );
+    const checkbox = screen.getByLabelText(labelText);
+    expect(checkbox.checked).toBe(false);
   });
 });
