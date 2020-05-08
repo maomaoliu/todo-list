@@ -1,1 +1,4 @@
 Data/
+.idea/
+backend/.gradle/
+frontend/.idea/
