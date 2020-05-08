@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Task {
     private long id;
     private String content;
-    private TaskStatus status;
+    private boolean isComplete;
     private LocalDateTime updatedAt;
 
     public Task() {
@@ -16,10 +16,10 @@ public class Task {
 
     public Task(Long id,
                 String content,
-                TaskStatus status) {
+                boolean isComplete) {
         this.id = id;
         this.content = content;
-        this.status = status;
+        this.isComplete = isComplete;
     }
 
     public long getId() {
@@ -30,12 +30,12 @@ public class Task {
         return content;
     }
 
-    public TaskStatus getStatus() {
-        return status;
+    public boolean getIsComplete() {
+        return isComplete;
     }
 
-    public void setStatus(TaskStatus status) {
-        this.status = status;
+    public void setIsComplete(boolean isComplete) {
+        this.isComplete = isComplete;
     }
 
     public LocalDateTime getUpdatedAt() {

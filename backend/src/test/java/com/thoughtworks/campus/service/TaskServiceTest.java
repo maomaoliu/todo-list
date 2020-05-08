@@ -1,7 +1,6 @@
 package com.thoughtworks.campus.service;
 
 import com.thoughtworks.campus.model.Task;
-import com.thoughtworks.campus.model.TaskStatus;
 import com.thoughtworks.campus.store.TaskStore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +37,7 @@ public class TaskServiceTest {
     public void shouldSaveTask() {
         when(taskStore.readTasks()).thenReturn(tasks);
 
-        Task savedTask = taskService.saveTask(new Task(1L, "newTask", TaskStatus.Created));
+        Task savedTask = taskService.saveTask(new Task(1L, "newTask", false));
 
         assertNotNull(savedTask.getUpdatedAt());
         verify(taskStore).writeTasks(any());
@@ -55,7 +54,7 @@ public class TaskServiceTest {
 
     @Test
     public void shouldFindTask() {
-        tasks.add(new Task(1L, "task", TaskStatus.Created));
+        tasks.add(new Task(1L, "task", false));
         when(taskStore.readTasks()).thenReturn(tasks);
 
         Optional<Task> optionalTask = taskService.find(1L);
@@ -76,10 +75,10 @@ public class TaskServiceTest {
 
     @Test
     public void shouldUpdateTask() {
-        tasks.add(new Task(1L, "task", TaskStatus.Created));
+        tasks.add(new Task(1L, "task", false));
         when(taskStore.readTasks()).thenReturn(tasks);
 
-        Optional<Task> optionalTask = taskService.update(new Task(1L, "new task", TaskStatus.Created));
+        Optional<Task> optionalTask = taskService.update(new Task(1L, "new task", false));
 
         Task task = optionalTask.get();
         assertEquals(1L, task.getId());
@@ -92,7 +91,7 @@ public class TaskServiceTest {
     public void shouldNotUpdateTaskWhenNotExist() {
         when(taskStore.readTasks()).thenReturn(tasks);
 
-        Optional<Task> optionalTask = taskService.update(new Task(1L, "new task", TaskStatus.Created));
+        Optional<Task> optionalTask = taskService.update(new Task(1L, "new task", false));
 
         assertFalse(optionalTask.isPresent());
         verify(taskStore, new Times(0)).writeTasks(any());
@@ -100,7 +99,7 @@ public class TaskServiceTest {
 
     @Test
     public void shouldDeleteTask() {
-        tasks.add(new Task(1L, "task", TaskStatus.Created));
+        tasks.add(new Task(1L, "task", false));
         when(taskStore.readTasks()).thenReturn(tasks);
 
         Optional<Task> optionalTask = taskService.delete(1L);

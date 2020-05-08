@@ -39,7 +39,7 @@ public class TaskController {
 
     @PutMapping(path = "/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody Task task) {
-        Optional<Task> updatedTask = taskService.update(new Task(id, task.getContent(), task.getStatus()));
+        Optional<Task> updatedTask = taskService.update(new Task(id, task.getContent(), task.getIsComplete()));
         return ResponseEntity.of(updatedTask);
     }
 

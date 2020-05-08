@@ -36,7 +36,7 @@ public class TaskService {
         Optional<Task> any = tasks.stream().filter(task1 -> task1.getId() == task.getId()).findAny();
         if (any.isPresent()) {
             any.get().setContent(task.getContent());
-            any.get().setStatus(task.getStatus());
+            any.get().setIsComplete(task.getIsComplete());
             any.get().setUpdatedAt();
             store.writeTasks(tasks);
         }
