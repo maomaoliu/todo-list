@@ -40,4 +40,17 @@ describe('<TodoItem>', () => {
     const checkbox = screen.getByLabelText(labelText);
     expect(checkbox.checked).toBe(false);
   });
+
+  test('should display item complete status currectlly', async () => {
+    item.isComplete = true;
+    render(
+      <TodoItem
+        item={item}
+        onItemUpdate={onItemUpdate}
+        onItemDelete={onItemDelete}
+      />,
+    );
+    const checkbox = screen.getByLabelText(labelText);
+    expect(checkbox.checked).toBe(true);
+  });
 });
