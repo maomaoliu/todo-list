@@ -13,9 +13,8 @@ const TodoItem = ({ item, onItemUpdate, onItemDelete }) => {
     >
       <input
         aria-label="isComplete"
-        // checked={item.isComplete}
+        checked={item.isComplete}
         type="checkbox"
-        // value={item.isComplete}
         onChange={e => {
           onItemUpdate({ ...todoItem, isComplete: e.target.checked });
         }}
